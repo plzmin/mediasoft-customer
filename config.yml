@@ -1,0 +1,21 @@
+http:
+  ip:localhost
+  port:8000
+
+grpc:
+  ip:localhost
+  port:8001
+
+postgres:
+  username:postgres
+  password:postgres
+  host:localhost
+  port:5432
+  database:customer_db
+
+restaurant_grpc:
+  ip:localhost
+  port:8003
+
+kafka:
+  - localhost:9092

@@ -1,0 +1,2 @@
+{"level":"info","msg":"starting listening http server at localhost:8000","time":"2023-07-03T01:14:30+04:00"}
+{"level":"fatal","msg":"failed init kafka conn kafka: client has run out of available brokers to talk to: dial tcp [::1]:9092: connectex: No connection could be made because the target machine actively refused it.","time":"2023-07-03T01:14:41+04:00"}
