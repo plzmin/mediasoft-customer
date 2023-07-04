@@ -24,7 +24,7 @@ func New(cfg config.Config) (*RestaurantClient, error) {
 	}
 	client := restaurant.NewMenuServiceClient(conn)
 
-	return &RestaurantClient{client: client}, err
+	return &RestaurantClient{client: client}, nil
 }
 
 func (r *RestaurantClient) GetActualMenu(ctx context.Context) (*restaurant.GetMenuResponse, error) {
@@ -34,7 +34,7 @@ func (r *RestaurantClient) GetActualMenu(ctx context.Context) (*restaurant.GetMe
 	if err != nil {
 		return nil, err
 	}
-	return res, err
+	return res, nil
 }
 
 func (r *RestaurantClient) Close() error {

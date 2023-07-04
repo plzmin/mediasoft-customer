@@ -11,7 +11,7 @@ func main() {
 	log := logger.New()
 
 	cfg := config.Config{}
-	if err := cleanenv.ReadConfig("config.yml", cfg); err != nil {
+	if err := cleanenv.ReadEnv(&cfg); err != nil {
 		log.Fatal("failed to retrieve env variables %v", err)
 	}
 

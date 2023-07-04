@@ -19,7 +19,7 @@ func New(brokers []string) (*Producer, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Producer{producer: producer}, err
+	return &Producer{producer: producer}, nil
 }
 
 func (p *Producer) SendMessage(topic string, message model.Order) error {
@@ -35,7 +35,7 @@ func (p *Producer) SendMessage(topic string, message model.Order) error {
 	if err != nil {
 		return err
 	}
-	return err
+	return nil
 }
 
 func (p *Producer) Close() error {

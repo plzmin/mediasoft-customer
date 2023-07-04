@@ -2,26 +2,26 @@ package config
 
 type Config struct {
 	HTTP struct {
-		IP   string `yaml:"IP" env:"HTTP_IP" env-default:"localhost"`
-		Port int    `yaml:"Port" env:"HTTP_PORT" env-default:"8000"`
-	} `yaml:"HTTP"`
+		IP   string `env:"HTTP_IP" env-default:"localhost"`
+		Port int    `env:"HTTP_PORT" env-default:"8000"`
+	}
 	GRPC struct {
-		IP   string `yaml:"IP" env:"GRPC_IP" env-default:"localhost"`
-		Port int    `yaml:"Port" env:"GRPC_PORT" env-default:"8001"`
-	} `yaml:"GRPC"`
+		IP   string `env:"GRPC_IP" env-default:"localhost"`
+		Port int    `env:"GRPC_PORT" env-default:"8001"`
+	}
 
 	PostgresSQL struct {
-		Username string `yaml:"Username" env:"PG_USER"  env-default:"postgres"`
-		Password string `yaml:"Password" env:"PG_PWD" env-default:"postgres"`
-		Host     string `yaml:"Host" env:"PG_HOST"  env-default:"localhost"`
-		Port     string `yaml:"Port" env:"PG_PORT" env-default:"5432"`
-		Database string `yaml:"Database" env:"PG_DATABASE"  env-default:"customer_db"`
-	} `yaml:"PostgresSQL"`
+		Username string `env:"PG_USER"  env-default:"postgres"`
+		Password string `env:"PG_PWD" env-default:"postgres"`
+		Host     string `env:"PG_HOST"  env-default:"localhost"`
+		Port     string `env:"PG_PORT" env-default:"5432"`
+		Database string `env:"PG_DATABASE"  env-default:"customer_db"`
+	}
 
 	RestaurantGRPC struct {
-		IP   string `yaml:"IP" env:"RESTAURANT_IP" env-default:"localhost"`
-		Port int    `yaml:"Port" env:"RESTAURANT_PORT" env-default:"8003"`
-	} `yaml:"RestaurantGRPC"`
+		IP   string `env:"RESTAURANT_IP" env-default:"localhost"`
+		Port int    `env:"RESTAURANT_PORT" env-default:"8003"`
+	}
 
-	Kafka []string `yaml:"Kafka" env:"KAFKA" env-default:"localhost:9092"`
+	Kafka []string `env:"KAFKA" env-default:"localhost:9092"`
 }
