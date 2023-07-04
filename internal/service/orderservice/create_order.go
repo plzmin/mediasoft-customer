@@ -32,7 +32,6 @@ func (s *Service) CreateOrder(ctx context.Context, req *customer.CreateOrderRequ
 		s.log.Error("failed to parse userUUID %v", err.Error())
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
-
 	salads, err := customerOrderItemToModel(req.Salads)
 	if err != nil {
 		s.log.Error("failed to parse salads uuid %v", err.Error())
