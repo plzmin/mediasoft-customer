@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/ilyakaznacheev/cleanenv"
+	"github.com/caarlos0/env/v9"
 	"mediasoft-customer/internal/app"
 	"mediasoft-customer/internal/config"
 	"mediasoft-customer/pkg/logger"
@@ -11,7 +11,7 @@ func main() {
 	log := logger.New()
 
 	cfg := config.Config{}
-	if err := cleanenv.ReadEnv(&cfg); err != nil {
+	if err := env.Parse(&cfg); err != nil {
 		log.Fatal("failed to retrieve env variables %v", err)
 	}
 

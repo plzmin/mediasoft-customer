@@ -1,13 +1,10 @@
 package logger
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/sirupsen/logrus"
 )
-
-const LOG_FILE = "logs/logger.log"
 
 type Interface interface {
 	Debug(message string, args ...interface{})
@@ -24,11 +21,6 @@ type Logger struct {
 func New() *Logger {
 	logger := logrus.NewEntry(logrus.StandardLogger())
 	logger.Logger.SetFormatter(&logrus.JSONFormatter{})
-	f, err := os.OpenFile(LOG_FILE, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
-	if err != nil {
-		fmt.Println("Failed to create logfile" + LOG_FILE)
-	}
-	logger.Logger.SetOutput(f)
 	return &Logger{logger: logger}
 }
 
