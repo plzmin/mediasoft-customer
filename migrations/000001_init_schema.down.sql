@@ -1,0 +1,4 @@
+DROP TABLE IF EXIST offices;
+DROP TABLE IF EXIST users;
+DROP TABLE IF EXIST orders;
+DROP TABLE IF EXIST order_item;
