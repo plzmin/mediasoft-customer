@@ -2,6 +2,7 @@ package ordersqlx
 
 import (
 	"context"
+	"fmt"
 	"github.com/jmoiron/sqlx"
 	"mediasoft-customer/internal/model"
 )
@@ -26,15 +27,16 @@ func (r *OrderSqlx) Create(ctx context.Context, order *model.Order) error {
 		return err
 	}
 
+	var oiq = `insert into order_item(order_uuid, count, product_uuid) values `
 	for _, orderItems := range [][]*model.OrderItem{order.Salads, order.Drinks, order.Meats, order.Desserts, order.Soups} {
 		for _, orderItem := range orderItems {
-			const oiq = `insert into order_item(order_uuid, count, product_uuid) values ($1, $2, $3)`
-			_, err = tx.Queryx(oiq, order.Uuid, orderItem.Count, orderItem.ProductUuid)
-			if err != nil {
-				tx.Rollback()
-				return err
-			}
+			oiq += fmt.Sprintf("($%s,$%d,$%s),", order.Uuid, orderItem.Count, orderItem.ProductUuid)
 		}
+	}
+	_, err = tx.Exec(oiq[:len(oiq)-1])
+	if err != nil {
+		tx.Rollback()
+		return err
 	}
 
 	if err = tx.Commit(); err != nil {

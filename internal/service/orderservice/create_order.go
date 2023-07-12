@@ -63,9 +63,8 @@ func (s *Service) CreateOrder(ctx context.Context, req *customer.CreateOrderRequ
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	orderUuid := uuid.New()
 	order := model.Order{
-		Uuid:      orderUuid,
+		Uuid:      uuid.New(),
 		UserUuid:  userUuid,
 		Salads:    salads,
 		Garnishes: garnishes,
@@ -90,16 +89,16 @@ func (s *Service) CreateOrder(ctx context.Context, req *customer.CreateOrderRequ
 }
 
 func customerOrderItemToModel(orderItems []*customer.OrderItem) ([]*model.OrderItem, error) {
-	var orl []*model.OrderItem
+	var items []*model.OrderItem
 	for _, orderItem := range orderItems {
 		productUuid, err := uuid.Parse(orderItem.ProductUuid)
 		if err != nil {
 			return nil, err
 		}
-		orl = append(orl, &model.OrderItem{
+		items = append(items, &model.OrderItem{
 			Count:       orderItem.Count,
 			ProductUuid: productUuid,
 		})
 	}
-	return orl, nil
+	return items, nil
 }

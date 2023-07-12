@@ -13,7 +13,7 @@ func (s *Service) GetOfficeList(ctx context.Context,
 
 	list, err := s.officeRepository.List(ctx)
 	if err != nil {
-		s.log.Error("failed get officeList ", err.Error())
+		s.log.Error("failed get officeList %v", err.Error())
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 	var data []*customer.Office
