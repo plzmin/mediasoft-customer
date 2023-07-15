@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/jmoiron/sqlx"
+	"gitlab.com/mediasoft-internship/final-task/contracts/pkg/contracts/customer"
 	"mediasoft-customer/internal/model"
 )
 
@@ -20,15 +21,15 @@ func (r *OrderSqlx) Create(ctx context.Context, order *model.Order) error {
 	if err != nil {
 		return err
 	}
-	const q = `insert into orders (uuid, user_uuid, created_at) values (:uuid, :user_uuid, :created_at)`
+	const q = `insert into orders (uuid, user_uuid) values (:uuid, :user_uuid)`
 	_, err = tx.NamedExec(q, order)
 	if err != nil {
 		tx.Rollback()
 		return err
 	}
 
-	var oiq = `insert into order_item(order_uuid, count, product_uuid) values `
-	for _, orderItems := range [][]*model.OrderItem{order.Salads, order.Drinks, order.Meats, order.Desserts, order.Soups} {
+	oiq := `insert into order_item(order_uuid, count, product_uuid) values `
+	for _, orderItems := range [][]*customer.OrderItem{order.Salads, order.Drinks, order.Meats, order.Desserts, order.Soups} {
 		for _, orderItem := range orderItems {
 			oiq += fmt.Sprintf("($%s,$%d,$%s),", order.Uuid, orderItem.Count, orderItem.ProductUuid)
 		}

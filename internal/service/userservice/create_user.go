@@ -7,7 +7,6 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"mediasoft-customer/internal/model"
-	"time"
 )
 
 func (s *Service) CreateUser(ctx context.Context,
@@ -28,7 +27,6 @@ func (s *Service) CreateUser(ctx context.Context,
 		Uuid:       uuid.New(),
 		Name:       req.Name,
 		OfficeUuid: uuidOffice,
-		CreatedAt:  time.Now(),
 	}
 
 	if err = s.userRepository.Create(ctx, &user); err != nil {

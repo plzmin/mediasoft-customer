@@ -8,7 +8,8 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Service) GetActualMenu(ctx context.Context, req *customer.GetActualMenuRequest) (*customer.GetActualMenuResponse, error) {
+func (s *Service) GetActualMenu(ctx context.Context,
+	req *customer.GetActualMenuRequest) (*customer.GetActualMenuResponse, error) {
 	res, err := s.restaurant.GetActualMenu(ctx)
 	if err != nil {
 		s.log.Error("failed to GetActualMenu %v", err.Error())
@@ -37,7 +38,6 @@ func restaurantToCustomerProduct(pl []*restaurant.Product) []*customer.Product {
 			Price:       p.Price,
 			CreatedAt:   p.CreatedAt,
 		})
-
 	}
 	return cpl
 }

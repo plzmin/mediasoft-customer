@@ -7,7 +7,6 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"mediasoft-customer/internal/model"
-	"time"
 )
 
 func (s *Service) CreateOffice(ctx context.Context,
@@ -19,10 +18,9 @@ func (s *Service) CreateOffice(ctx context.Context,
 	}
 
 	office := model.Office{
-		Uuid:      uuid.New(),
-		Name:      req.Name,
-		Address:   req.Address,
-		CreatedAt: time.Now(),
+		Uuid:    uuid.New(),
+		Name:    req.Name,
+		Address: req.Address,
 	}
 
 	if err := s.officeRepository.Create(ctx, &office); err != nil {

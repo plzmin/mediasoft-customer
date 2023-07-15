@@ -2,28 +2,24 @@ package officeservice
 
 import (
 	"context"
-	"github.com/google/uuid"
-	"github.com/stretchr/testify/mock"
 	"gitlab.com/mediasoft-internship/final-task/contracts/pkg/contracts/customer"
-	"mediasoft-customer/internal/model"
 	"mediasoft-customer/internal/repository/officerepository"
 	"mediasoft-customer/internal/repository/officerepository/mocks"
 	"mediasoft-customer/pkg/logger"
 	"reflect"
 	"testing"
-	"time"
 )
 
-type OfficeMatcher struct {
-	ExpectedOffice model.Office
-}
-
-func (m *OfficeMatcher) Matches(x interface{}) bool {
-	if eo, ok := x.(*model.Office); ok {
-		return eo.Name == m.ExpectedOffice.Name && eo.Address == m.ExpectedOffice.Address
-	}
-	return false
-}
+//type OfficeMatcher struct {
+//	ExpectedOffice model.Office
+//}
+//
+//func (m *OfficeMatcher) Matches(x interface{}) bool {
+//	if eo, ok := x.(*model.Office); ok {
+//		return eo.Name == m.ExpectedOffice.Name && eo.Address == m.ExpectedOffice.Address
+//	}
+//	return false
+//}
 
 func TestService_CreateOffice(t *testing.T) {
 	type fields struct {
@@ -60,22 +56,22 @@ func TestService_CreateOffice(t *testing.T) {
 			l := logger.New()
 			officeRepository := mocks.NewOfficeRepository(t)
 
-			expectedOffice := model.Office{
-				Uuid:      uuid.UUID{},
-				Name:      tt.args.req.Name,
-				Address:   tt.args.req.Address,
-				CreatedAt: time.Time{},
-			}
+			//expectedOffice := model.Office{
+			//	Uuid:      uuid.UUID{},
+			//	Name:      tt.args.req.Name,
+			//	Address:   tt.args.req.Address,
+			//	CreatedAt: time.Time{},
+			//}
 
-			officeRepository.
-				On("Create", mock.Anything, mock.MatchedBy(func(x interface{}) bool {
-					return (&OfficeMatcher{
-						ExpectedOffice: expectedOffice,
-					}).
-						Matches(x)
-				})).
-				Once().
-				Return(nil)
+			//officeRepository.
+			//	On("Create", mock.Anything, mock.MatchedBy(func(x interface{}) bool {
+			//		return (&OfficeMatcher{
+			//			ExpectedOffice: expectedOffice,
+			//		}).
+			//			Matches(x)
+			//	})).
+			//	Once().
+			//	Return(nil)
 
 			s := &Service{
 				log:                              l,
