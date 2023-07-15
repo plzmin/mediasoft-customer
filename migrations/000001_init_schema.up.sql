@@ -5,7 +5,7 @@ create table if not exists offices
     primary key,
     name       text,
     address    text,
-    created_at timestamp
+    created_at timestamp default current_timestamp
 );
 create table if not exists users
 (
@@ -17,7 +17,7 @@ create table if not exists users
     constraint user_office_uuid_fk
     references public.offices
     on update cascade on delete cascade,
-    created_at  timestamp
+    created_at  timestamp default current_timestamp
 );
 create table if not exists orders
 (
@@ -28,7 +28,7 @@ create table if not exists orders
     constraint order_users_uuid_fk
     references public.users
     on update cascade on delete cascade,
-    created_at timestamp
+    created_at timestamp default current_timestamp
 );
 create table if not exists order_item
 (

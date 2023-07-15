@@ -32,47 +32,16 @@ func (s *Service) CreateOrder(ctx context.Context, req *customer.CreateOrderRequ
 		s.log.Error("failed to parse userUUID %v", err.Error())
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
-	salads, err := customerOrderItemToModel(req.Salads)
-	if err != nil {
-		s.log.Error("failed to parse salads uuid %v", err.Error())
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-	garnishes, err := customerOrderItemToModel(req.Garnishes)
-	if err != nil {
-		s.log.Error("failed to parse garnishes uuid %v", err.Error())
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-	meats, err := customerOrderItemToModel(req.Meats)
-	if err != nil {
-		s.log.Error("failed to parse meats uuid %v", err.Error())
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-	soups, err := customerOrderItemToModel(req.Soups)
-	if err != nil {
-		s.log.Error("failed to parse soups uuid %v", err.Error())
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-	drinks, err := customerOrderItemToModel(req.Drinks)
-	if err != nil {
-		s.log.Error("failed to parse drinks uuid %v", err.Error())
-		return nil, status.Error(codes.Internal, err.Error())
-	}
-	desserts, err := customerOrderItemToModel(req.Desserts)
-	if err != nil {
-		s.log.Error("failed to parse desserts uuid %v", err.Error())
-		return nil, status.Error(codes.Internal, err.Error())
-	}
 
 	order := model.Order{
 		Uuid:      uuid.New(),
 		UserUuid:  userUuid,
-		Salads:    salads,
-		Garnishes: garnishes,
-		Meats:     meats,
-		Soups:     soups,
-		Drinks:    drinks,
-		Desserts:  desserts,
-		CreatedAt: time.Now(),
+		Salads:    req.Salads,
+		Garnishes: req.Garnishes,
+		Meats:     req.Meats,
+		Soups:     req.Soups,
+		Drinks:    req.Drinks,
+		Desserts:  req.Desserts,
 	}
 
 	if err = s.orderRepository.Create(ctx, &order); err != nil {
@@ -86,19 +55,4 @@ func (s *Service) CreateOrder(ctx context.Context, req *customer.CreateOrderRequ
 	}
 
 	return &customer.CreateOrderResponse{}, nil
-}
-
-func customerOrderItemToModel(orderItems []*customer.OrderItem) ([]*model.OrderItem, error) {
-	var items []*model.OrderItem
-	for _, orderItem := range orderItems {
-		productUuid, err := uuid.Parse(orderItem.ProductUuid)
-		if err != nil {
-			return nil, err
-		}
-		items = append(items, &model.OrderItem{
-			Count:       orderItem.Count,
-			ProductUuid: productUuid,
-		})
-	}
-	return items, nil
 }

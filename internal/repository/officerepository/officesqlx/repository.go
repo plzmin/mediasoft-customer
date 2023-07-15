@@ -15,7 +15,7 @@ func New(db *sqlx.DB) *OfficeSqlx {
 }
 
 func (r *OfficeSqlx) Create(ctx context.Context, office *model.Office) error {
-	const q = `insert into offices (uuid, name, address, created_at) values (:uuid, :name,:address,:created_at)`
+	const q = `insert into offices (uuid, name, address) values (:uuid,:name,:address)`
 	_, err := r.db.NamedExecContext(ctx, q, office)
 	return err
 }

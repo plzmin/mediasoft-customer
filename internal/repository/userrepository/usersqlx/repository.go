@@ -15,9 +15,9 @@ func New(db *sqlx.DB) *UserSQLx {
 	return &UserSQLx{db: db}
 }
 
-func (r *UserSQLx) Create(ctx context.Context, u *model.User) error {
-	const q = `insert into users (uuid, name, office_uuid, created_at) values (:uuid, :name,:office_uuid,:created_at)`
-	_, err := r.db.NamedExecContext(ctx, q, u)
+func (r *UserSQLx) Create(ctx context.Context, user *model.User) error {
+	const q = `insert into users (uuid, name, office_uuid) values (:uuid, :name,:office_uuid)`
+	_, err := r.db.NamedExecContext(ctx, q, user)
 	return err
 }
 

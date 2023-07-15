@@ -16,6 +16,7 @@ func (s *Service) GetOfficeList(ctx context.Context,
 		s.log.Error("failed get officeList %v", err.Error())
 		return nil, status.Error(codes.Internal, err.Error())
 	}
+
 	var data []*customer.Office
 
 	for _, office := range list {
