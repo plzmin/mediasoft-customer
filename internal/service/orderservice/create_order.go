@@ -10,7 +10,8 @@ import (
 	"time"
 )
 
-func (s *Service) CreateOrder(ctx context.Context, req *customer.CreateOrderRequest) (*customer.CreateOrderResponse, error) {
+func (s *Service) CreateOrder(ctx context.Context,
+	req *customer.CreateOrderRequest) (*customer.CreateOrderResponse, error) {
 	if err := req.ValidateAll(); err != nil {
 		s.log.Warn("not valid CreateOrderRequest %v", err.Error())
 		return nil, status.Error(codes.InvalidArgument, err.Error())
@@ -23,7 +24,7 @@ func (s *Service) CreateOrder(ctx context.Context, req *customer.CreateOrderRequ
 
 	openTime := res.Menu.OpeningRecordAt.AsTime()
 	closeTime := res.Menu.ClosingRecordAt.AsTime()
-	if openTime.Before(time.Now()) && closeTime.After(time.Now()) {
+	if time.Now().Before(openTime) && time.Now().After(closeTime) {
 		return nil, status.Error(codes.Canceled, "closed record")
 	}
 

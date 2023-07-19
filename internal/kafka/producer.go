@@ -10,16 +10,16 @@ type Producer struct {
 	producer sarama.SyncProducer
 }
 
-func New(brokers []string) (*Producer, error) {
+func New(broker []string) (*Producer, error) {
 	cfg := sarama.NewConfig()
 	cfg.Producer.RequiredAcks = sarama.WaitForAll
 	cfg.Producer.Retry.Max = 5
 	cfg.Producer.Return.Successes = true
-	producer, err := sarama.NewSyncProducer(brokers, cfg)
+	producer, err := sarama.NewSyncProducer(broker, cfg)
 	if err != nil {
 		return nil, err
 	}
-	return &Producer{producer: producer}, nil
+	return &Producer{producer: producer}, err
 }
 
 func (p *Producer) SendMessage(topic string, message model.Order) error {
