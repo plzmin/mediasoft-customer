@@ -12,6 +12,7 @@ import (
 
 func (s *Service) CreateOrder(ctx context.Context,
 	req *customer.CreateOrderRequest) (*customer.CreateOrderResponse, error) {
+
 	if err := req.ValidateAll(); err != nil {
 		s.log.Warn("not valid CreateOrderRequest %v", err.Error())
 		return nil, status.Error(codes.InvalidArgument, err.Error())

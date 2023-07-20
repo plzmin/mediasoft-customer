@@ -2,7 +2,6 @@ package usersqlx
 
 import (
 	"context"
-	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"mediasoft-customer/internal/model"
 )
@@ -21,16 +20,9 @@ func (r *UserSQLx) Create(ctx context.Context, user *model.User) error {
 	return err
 }
 
-func (r *UserSQLx) ListByOfficeUuid(ctx context.Context, uuid uuid.UUID) ([]*model.User, error) {
+func (r *UserSQLx) List(ctx context.Context, uuid string) ([]*model.User, error) {
 	const q = `select users.*, o.name AS office_name from users join offices o on o.uuid = users.office_uuid where users.office_uuid = $1`
 	var list []*model.User
 	err := r.db.SelectContext(ctx, &list, q, uuid)
-	return list, err
-}
-
-func (r *UserSQLx) List(ctx context.Context) ([]*model.User, error) {
-	const q = `select users.*, o.name AS office_name from users join offices o on o.uuid = users.office_uuid`
-	var list []*model.User
-	err := r.db.SelectContext(ctx, &list, q)
 	return list, err
 }
